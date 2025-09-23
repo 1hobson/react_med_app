@@ -66,6 +66,11 @@ function Navbar() {
               <button className="btn1">Login</button>
             </Link>
           </li>
+          <li class="link">
+            <Link to="/instant-consultation">
+              <button class="btn1">Instant Consultation</button>
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>

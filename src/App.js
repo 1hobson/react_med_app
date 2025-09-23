@@ -5,7 +5,7 @@ import Navbar from './Components/Navbar/Navbar';
 import LandingPage from './Components/Landing_Page/LandingPage';
 import SignUp from './Components/SignUp/SignUp';
 import Login from './Components/Login/Login';
-import InstantConsultation from './components/InstantConsultation/InstantConsultation';  
+import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation';  
 
 function App() {
   return (
