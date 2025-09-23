@@ -6,6 +6,8 @@ import LandingPage from './Components/Landing_Page/LandingPage';
 import SignUp from './Components/SignUp/SignUp';
 import Login from './Components/Login/Login';
 import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation';  
+import Appointments from './Components/Appointments/Appointments';  
+
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />            
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/appointments" element={<Appointments />} />
           <Route path="/instant-consultation" element={<InstantConsultation />} />
         </Routes>
         
