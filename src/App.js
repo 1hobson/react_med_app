@@ -7,7 +7,7 @@ import SignUp from './Components/SignUp/SignUp';
 import Login from './Components/Login/Login';
 import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation';  
 import Appointments from './Components/Appointments/Appointments';  
-import Notification from './Components/Appointments/Notification';
+import Notification from './Components/Appointments/Notification/Notification';
 
 function App() {
   return (
