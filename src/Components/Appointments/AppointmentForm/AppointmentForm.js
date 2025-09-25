@@ -18,6 +18,7 @@ const AppointmentForm = ({ doctorName, doctorSpeciality, onSubmit }) => {
       doctorSpeciality,
     });
 
+    // Reset form fields
     setName('');
     setPhoneNumber('');
     setAppointmentDate('');
@@ -26,24 +27,51 @@ const AppointmentForm = ({ doctorName, doctorSpeciality, onSubmit }) => {
 
   return (
     <form onSubmit={handleFormSubmit} className="appointment-form">
+      {/* Name */}
       <div className="form-group">
         <label htmlFor="name">Name:</label>
-        <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+        <input
+          type="text"
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
       </div>
 
+      {/* Phone Number */}
       <div className="form-group">
         <label htmlFor="phoneNumber">Phone Number:</label>
-        <input type="tel" id="phoneNumber" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
+        <input
+          type="tel"
+          id="phoneNumber"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          required
+        />
       </div>
 
+      {/* Appointment Date */}
       <div className="form-group">
         <label htmlFor="appointmentDate">Select Date:</label>
-        <input type="date" id="appointmentDate" value={appointmentDate} onChange={(e) => setAppointmentDate(e.target.value)} required />
+        <input
+          type="date"
+          id="appointmentDate"
+          value={appointmentDate}
+          onChange={(e) => setAppointmentDate(e.target.value)}
+          required
+        />
       </div>
 
+      {/* Time Slot Dropdown */}
       <div className="form-group">
         <label htmlFor="timeSlot">Select Time Slot:</label>
-        <select id="timeSlot" value={selectedSlot} onChange={(e) => setSelectedSlot(e.target.value)} required>
+        <select
+          id="timeSlot"
+          value={selectedSlot}
+          onChange={(e) => setSelectedSlot(e.target.value)}
+          required
+        >
           <option value="">--Select a slot--</option>
           <option value="09:00 AM">09:00 AM</option>
           <option value="10:00 AM">10:00 AM</option>
@@ -53,7 +81,7 @@ const AppointmentForm = ({ doctorName, doctorSpeciality, onSubmit }) => {
         </select>
       </div>
 
-      <button type="submit">Book Now</button>
+      <button type="submit" className="btn-book">Book Now</button>
     </form>
   );
 };

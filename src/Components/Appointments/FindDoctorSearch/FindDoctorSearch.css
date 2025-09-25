@@ -73,8 +73,7 @@
 .doctor-search-box {
     display: flex;
     align-items: center;
-    width: 430px;
-    position: absolute;
+    width: 800px;
     margin-top: 25px;
     margin-bottom: 20px;
     box-shadow: rgba(0, 0, 0,.1) 0 - 1px 0 0 inset;
@@ -90,17 +89,19 @@
 }
 
 .search-doctor-input-box {
+    display: block;
+    margin: 0 auto;
     height: 40px;
-    width: 100%;
-    padding: 6px 20px 5px 10px;
+    width: 400px;
+    padding: 6px 40px 5px 10px;
     outline: none;
     cursor: pointer;
     font-size: 14px;
-    border-top-left-radius:5px;
-    border-bottom-left-radius:5px;
-    border-top-right-radius:0;
-    border-bottom-right-radius:0;
-    border:1px solid rgb(59, 58, 58);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid rgb(59, 58, 58);
 }
 
 .findiconimg{

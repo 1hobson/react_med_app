@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import './Appointments.css';
 import { useSearchParams } from 'react-router-dom';
 import FindDoctorSearch from './FindDoctorSearch/FindDoctorSearch';
@@ -41,25 +41,29 @@ const Appointments = ({ setAppointmentData }) => {
   };
 
   return (
-    <center>
+    <div className="appointments-page">
       <div className="searchpage-container">
-        <FindDoctorSearch onSearch={(text) => {
-          if (text === '') {
-            setFilteredDoctors([]);
-            setIsSearched(false);
-          } else {
-            const filtered = doctors.filter(doctor =>
-              doctor.speciality.toLowerCase().includes(text.toLowerCase())
-            );
-            setFilteredDoctors(filtered);
-            setIsSearched(true);
-          }
-        }} />
+        <FindDoctorSearch
+          onSearch={(text) => {
+            if (text === '') {
+              setFilteredDoctors([]);
+              setIsSearched(false);
+            } else {
+              const filtered = doctors.filter(doctor =>
+                doctor.speciality.toLowerCase().includes(text.toLowerCase())
+              );
+              setFilteredDoctors(filtered);
+              setIsSearched(true);
+            }
+          }}
+        />
+
         <div className="search-results-container">
           {isSearched && (
-            <center>
+            <>
               <h2>{filteredDoctors.length} doctors are available {searchParams.get('location')}</h2>
               <h3>Book appointments with minimum wait-time & verified doctor details</h3>
+
               {filteredDoctors.length > 0 ? (
                 filteredDoctors.map(doctor => (
                   <DoctorCard
@@ -71,11 +75,11 @@ const Appointments = ({ setAppointmentData }) => {
               ) : (
                 <p>No doctors found.</p>
               )}
-            </center>
+            </>
           )}
         </div>
       </div>
-    </center>
+    </div>
   );
 };
 
