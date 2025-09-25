@@ -29,27 +29,32 @@ const Appointments = ({ setAppointmentData }) => {
       .catch(err => console.log(err));
   };
 
-  const handleSearch = (searchText) => {
-    if (searchText === '') {
-      setFilteredDoctors([]);
-      setIsSearched(false);
-    } else {
-      const filtered = doctors.filter(doctor =>
-        doctor.speciality.toLowerCase().includes(searchText.toLowerCase())
-      );
-      setFilteredDoctors(filtered);
-      setIsSearched(true);
-    }
-  };
-
   useEffect(() => {
     getDoctorsDetails();
   }, [searchParams]);
 
+  const handleBookAppointment = (appointment, doctorName) => {
+    localStorage.setItem(doctorName, JSON.stringify(appointment));
+    if (setAppointmentData) {
+      setAppointmentData(appointment);
+    }
+  };
+
   return (
     <center>
       <div className="searchpage-container">
-        <FindDoctorSearch onSearch={handleSearch} />
+        <FindDoctorSearch onSearch={(text) => {
+          if (text === '') {
+            setFilteredDoctors([]);
+            setIsSearched(false);
+          } else {
+            const filtered = doctors.filter(doctor =>
+              doctor.speciality.toLowerCase().includes(text.toLowerCase())
+            );
+            setFilteredDoctors(filtered);
+            setIsSearched(true);
+          }
+        }} />
         <div className="search-results-container">
           {isSearched && (
             <center>
@@ -58,10 +63,9 @@ const Appointments = ({ setAppointmentData }) => {
               {filteredDoctors.length > 0 ? (
                 filteredDoctors.map(doctor => (
                   <DoctorCard
-                    className="doctorcard"
                     {...doctor}
                     key={doctor.name}
-                    setAppointmentData={setAppointmentData}
+                    setAppointmentData={(appointment) => handleBookAppointment(appointment, doctor.name)}
                   />
                 ))
               ) : (
