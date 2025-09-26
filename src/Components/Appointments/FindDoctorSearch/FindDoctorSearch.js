@@ -21,13 +21,13 @@ const FindDoctorSearch = () => {
     const handleDoctorSelect = (speciality) => {
         setSearchDoctor(speciality);
         setDoctorResultHidden(true);
-        navigate(`/instant-consultation?speciality=${speciality}`);
+        navigate(`/appointments?speciality=${speciality}`);
     };
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         if (searchDoctor.trim() !== '') {
-            navigate(`/instant-consultation?speciality=${searchDoctor}`);
+            navigate(`/appointments?speciality=${searchDoctor}`);
         }
     };
 

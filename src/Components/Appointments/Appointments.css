@@ -7,11 +7,11 @@
 
 .searchpage-container {
     max-width: 1200px;
-    margin: 10% auto 0 auto; /* keep top spacing */
+    margin: 10% auto 0 auto; 
     color: #414146;
     padding: 0 20px;
     width: 100%;
-    position: relative; /* important so navbar stays clickable */
+    position: relative; 
 }
 
 .searchpage-container img {

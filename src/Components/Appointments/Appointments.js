@@ -14,9 +14,11 @@ const Appointments = ({ setAppointmentData }) => {
     fetch('https://api.npoint.io/9a5543d36f1460da2f63')
       .then(res => res.json())
       .then(data => {
-        if (searchParams.get('speciality')) {
+        setDoctors(data);
+        const specialityParam = searchParams.get('speciality');
+        if (specialityParam) {
           const filtered = data.filter(
-            doctor => doctor.speciality.toLowerCase() === searchParams.get('speciality').toLowerCase()
+            doctor => doctor.speciality.toLowerCase() === specialityParam.toLowerCase()
           );
           setFilteredDoctors(filtered);
           setIsSearched(true);
@@ -24,7 +26,6 @@ const Appointments = ({ setAppointmentData }) => {
           setFilteredDoctors([]);
           setIsSearched(false);
         }
-        setDoctors(data);
       })
       .catch(err => console.log(err));
   };
@@ -40,43 +41,45 @@ const Appointments = ({ setAppointmentData }) => {
     }
   };
 
+  const handleSearch = (text) => {
+    if (!text) {
+      setFilteredDoctors([]);
+      setIsSearched(false);
+      return;
+    }
+    const filtered = doctors.filter(doctor =>
+      doctor.speciality.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredDoctors(filtered);
+    setIsSearched(true);
+  };
+
   return (
     <div className="appointments-page">
       <div className="searchpage-container">
-        <FindDoctorSearch
-          onSearch={(text) => {
-            if (text === '') {
-              setFilteredDoctors([]);
-              setIsSearched(false);
-            } else {
-              const filtered = doctors.filter(doctor =>
-                doctor.speciality.toLowerCase().includes(text.toLowerCase())
-              );
-              setFilteredDoctors(filtered);
-              setIsSearched(true);
-            }
-          }}
-        />
+        <FindDoctorSearch onSearch={handleSearch} />
 
         <div className="search-results-container">
-          {isSearched && (
+        {isSearched && (
             <>
-              <h2>{filteredDoctors.length} doctors are available {searchParams.get('location')}</h2>
-              <h3>Book appointments with minimum wait-time & verified doctor details</h3>
+            <h2>{filteredDoctors.length} doctors are available {searchParams.get('location')}</h2>
+            <h3>Book appointments with minimum wait-time & verified doctor details</h3>
 
-              {filteredDoctors.length > 0 ? (
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                {filteredDoctors.length > 0 ? (
                 filteredDoctors.map(doctor => (
-                  <DoctorCard
+                    <DoctorCard
                     {...doctor}
                     key={doctor.name}
                     setAppointmentData={(appointment) => handleBookAppointment(appointment, doctor.name)}
-                  />
+                    />
                 ))
-              ) : (
+                ) : (
                 <p>No doctors found.</p>
-              )}
+                )}
+            </div>
             </>
-          )}
+        )}
         </div>
       </div>
     </div>
