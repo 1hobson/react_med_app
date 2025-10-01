@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import './InstantConsultation.css';
 import { useSearchParams } from 'react-router-dom';
 import FindDoctorSearchIC from './FindDoctorSearchIC/FindDoctorSearchIC';
 import DoctorCardIC from './DoctorCardIC/DoctorCardIC';
 
-const InstantConsultation = () => {
+const InstantConsultation = ({ setAppointmentData }) => {
   const [searchParams] = useSearchParams();
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [isSearched, setIsSearched] = useState(false);
 
+useEffect(() => {
   const getDoctorsDetails = () => {
     fetch('https://api.npoint.io/9a5543d36f1460da2f63')
       .then(res => res.json())
       .then(data => {
-        if (searchParams.get('speciality')) {
+        setDoctors(data);
+        const specialityParam = searchParams.get('speciality');
+        if (specialityParam) {
           const filtered = data.filter(
-            doctor => doctor.speciality.toLowerCase() === searchParams.get('speciality').toLowerCase()
+            doctor => doctor.speciality.toLowerCase() === specialityParam.toLowerCase()
           );
           setFilteredDoctors(filtered);
           setIsSearched(true);
@@ -24,49 +27,62 @@ const InstantConsultation = () => {
           setFilteredDoctors([]);
           setIsSearched(false);
         }
-        setDoctors(data);
       })
       .catch(err => console.log(err));
   };
 
-  const handleSearch = (searchText) => {
-    if (searchText === '') {
-      setFilteredDoctors([]);
-      setIsSearched(false);
-    } else {
-      const filtered = doctors.filter(
-        doctor => doctor.speciality.toLowerCase().includes(searchText.toLowerCase())
-      );
-      setFilteredDoctors(filtered);
-      setIsSearched(true);
+  getDoctorsDetails();
+}, [searchParams]);
+
+  const handleBookAppointment = (appointment, doctorName) => {
+    localStorage.setItem(doctorName, JSON.stringify(appointment));
+    if (setAppointmentData) {
+      setAppointmentData(appointment);
     }
   };
 
-  useEffect(() => {
-    getDoctorsDetails();
-  }, [searchParams]);
+  const handleSearch = (text) => {
+    if (!text) {
+      setFilteredDoctors([]);
+      setIsSearched(false);
+      return;
+    }
+    const filtered = doctors.filter(doctor =>
+      doctor.speciality.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredDoctors(filtered);
+    setIsSearched(true);
+  };
 
   return (
-    <center>
+    <div className="appointments-page">
       <div className="searchpage-container">
         <FindDoctorSearchIC onSearch={handleSearch} />
+
         <div className="search-results-container">
-          {isSearched && (
-            <center>
-              <h2>{filteredDoctors.length} doctors are available {searchParams.get('location')}</h2>
-              <h3>Book appointments with minimum wait-time & verified doctor details</h3>
-              {filteredDoctors.length > 0 ? (
+        {isSearched && (
+            <>
+            <h2>{filteredDoctors.length} doctors are available {searchParams.get('location')}</h2>
+            <h3>Book appointments with minimum wait-time & verified doctor details</h3>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                {filteredDoctors.length > 0 ? (
                 filteredDoctors.map(doctor => (
-                  <DoctorCardIC {...doctor} key={doctor.name} />
+                    <DoctorCardIC
+                    {...doctor}
+                    key={doctor.name}
+                    setAppointmentData={(appointment) => handleBookAppointment(appointment, doctor.name)}
+                    />
                 ))
-              ) : (
+                ) : (
                 <p>No doctors found.</p>
-              )}
-            </center>
-          )}
+                )}
+            </div>
+            </>
+        )}
         </div>
       </div>
-    </center>
+    </div>
   );
 };
 

@@ -10,7 +10,7 @@ import Appointments from './Components/Appointments/Appointments';
 import Notification from './Components/Notification/Notification';
 
 function App() {
-  const [appointmentData, setAppointmentData] = useState(null);
+  const [setAppointmentData] = useState(null);
 
   return (
     <div className="App">

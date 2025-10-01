@@ -10,29 +10,29 @@ const Appointments = ({ setAppointmentData }) => {
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [isSearched, setIsSearched] = useState(false);
 
-  const getDoctorsDetails = () => {
-    fetch('https://api.npoint.io/9a5543d36f1460da2f63')
-      .then(res => res.json())
-      .then(data => {
-        setDoctors(data);
-        const specialityParam = searchParams.get('speciality');
-        if (specialityParam) {
-          const filtered = data.filter(
-            doctor => doctor.speciality.toLowerCase() === specialityParam.toLowerCase()
-          );
-          setFilteredDoctors(filtered);
-          setIsSearched(true);
-        } else {
-          setFilteredDoctors([]);
-          setIsSearched(false);
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
   useEffect(() => {
+    const getDoctorsDetails = () => {
+      fetch('https://api.npoint.io/9a5543d36f1460da2f63')
+        .then(res => res.json())
+        .then(data => {
+          setDoctors(data);
+          const specialityParam = searchParams.get('speciality');
+          if (specialityParam) {
+            const filtered = data.filter(
+              doctor => doctor.speciality.toLowerCase() === specialityParam.toLowerCase()
+            );
+            setFilteredDoctors(filtered);
+            setIsSearched(true);
+          } else {
+            setFilteredDoctors([]);
+            setIsSearched(false);
+          }
+        })
+        .catch(err => console.log(err));
+    };
+  
     getDoctorsDetails();
-  }, [searchParams]);
+  }, [searchParams]);  
 
   const handleBookAppointment = (appointment, doctorName) => {
     localStorage.setItem(doctorName, JSON.stringify(appointment));

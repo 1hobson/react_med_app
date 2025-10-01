@@ -1,7 +1,7 @@
 // Following code has been commented with appropriate comments for your reference.
 import React, { useState } from 'react';
 import './Sign_Up.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../../config';
 
 // Function component for Sign Up form
@@ -39,12 +39,14 @@ const Sign_Up = () => {
         });
 
         const json = await response.json(); // Parse the response JSON
+
         if (json.authtoken) {
             // Store user data in session storage
             sessionStorage.setItem("auth-token", json.authtoken);
             sessionStorage.setItem("name", name);
             sessionStorage.setItem("phone", phone);
             sessionStorage.setItem("email", email);
+
             // Redirect user to home page
             navigate("/");
             window.location.reload(); // Refresh the page

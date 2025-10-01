@@ -4,7 +4,6 @@ import { API_URL } from '../../config';
 
 const Login = () => {
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
@@ -22,20 +21,9 @@ const Login = () => {
     e.preventDefault();
     setError(null);
 
-    // Phone validation if phone field is filled
-    if (phone && !/^\d{10}$/.test(phone)) {
-      setError('Phone number must be exactly 10 digits.');
-      return;
-    }
-
-    // Email validation if email field is filled
-    if (!phone && email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    // Email validation
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError('Please enter a valid email address.');
-      return;
-    }
-
-    if (!phone && !email) {
-      setError('Please enter either your phone number or email.');
       return;
     }
 
@@ -43,21 +31,18 @@ const Login = () => {
       const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, phone, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const json = await res.json();
 
       if (json.authtoken) {
         sessionStorage.setItem('auth-token', json.authtoken);
-        if (email) sessionStorage.setItem('email', email);
-        if (phone) sessionStorage.setItem('phone', phone);
+        sessionStorage.setItem('email', email);
 
         // Extract username from email before redirect
-        if (email) {
-          const username = email.split('@')[0];
-          sessionStorage.setItem('name', username);
-        }
+        const username = email.split('@')[0];
+        sessionStorage.setItem('name', username);
 
         navigate('/');
       } else {
