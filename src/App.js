@@ -10,19 +10,33 @@ import Appointments from './Components/Appointments/Appointments';
 import Notification from './Components/Notification/Notification';
 
 function App() {
-  const [setAppointmentData] = useState(null);
+  const [appointmentData, setAppointmentData] = useState(null);
+  const [canceledAppointment, setCanceledAppointment] = useState(false);
+
+  const handleNotificationCancel = (doctorName) => {
+    localStorage.removeItem(doctorName);
+    localStorage.removeItem('doctorData');
+    setAppointmentData(null);
+    setCanceledAppointment(true);
+  };
+
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Notification>
+        <Notification
+        appointmentData={appointmentData}
+        canceledAppointment={canceledAppointment}
+        setCanceledAppointment={setCanceledAppointment}
+        onCancel={handleNotificationCancel}
+        >
           <Navbar />
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/appointments" element={<Appointments setAppointmentData={setAppointmentData} />} />
-            <Route path="/instant-consultation" element={<InstantConsultation />} />
+            <Route path="/appointments" element={<Appointments setAppointmentData={setAppointmentData} setCanceledAppointment={setCanceledAppointment} />} />
+            <Route path="/instant-consultation" element={<InstantConsultation setAppointmentData={setAppointmentData} setCanceledAppointment={setCanceledAppointment} />} />
           </Routes>
         </Notification>
       </BrowserRouter>

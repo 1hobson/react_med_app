@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import FindDoctorSearch from './FindDoctorSearch/FindDoctorSearch';
 import DoctorCard from './DoctorCard/DoctorCard';
 
-const Appointments = ({ setAppointmentData }) => {
+const Appointments = ({ setAppointmentData, setCanceledAppointment, appointmentData }) => {
   const [searchParams] = useSearchParams();
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
@@ -34,11 +34,25 @@ const Appointments = ({ setAppointmentData }) => {
     getDoctorsDetails();
   }, [searchParams]);  
 
-  const handleBookAppointment = (appointment, doctorName) => {
-    localStorage.setItem(doctorName, JSON.stringify(appointment));
+  const handleBookAppointment = (appointmentDetails, doctorName) => {
+    const now = new Date();
+    const appointmentWithDetails = {
+      ...appointmentDetails,
+      doctorName: doctorName,
+      date: now.toLocaleDateString(),
+      time: now.toLocaleTimeString(),
+    };
+
+    localStorage.setItem(doctorName, JSON.stringify(appointmentWithDetails));
+
     if (setAppointmentData) {
-      setAppointmentData(appointment);
+      setAppointmentData(appointmentWithDetails);
     }
+
+    const doctorData = {
+      name: doctorName,
+    };
+    localStorage.setItem('doctorData', JSON.stringify(doctorData));
   };
 
   const handleSearch = (text) => {
@@ -69,9 +83,11 @@ const Appointments = ({ setAppointmentData }) => {
                 {filteredDoctors.length > 0 ? (
                 filteredDoctors.map(doctor => (
                     <DoctorCard
-                    {...doctor}
-                    key={doctor.name}
-                    setAppointmentData={(appointment) => handleBookAppointment(appointment, doctor.name)}
+                      {...doctor}
+                      key={doctor.name}
+                      setAppointmentData={(appointment) => handleBookAppointment(appointment, doctor.name)}
+                      setCanceledAppointment={setCanceledAppointment}
+                      appointmentData={appointmentData} // <--- Pass down current appointment
                     />
                 ))
                 ) : (

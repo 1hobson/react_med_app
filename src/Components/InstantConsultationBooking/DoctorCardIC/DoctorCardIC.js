@@ -5,7 +5,7 @@ import './DoctorCardIC.css';
 import AppointmentFormIC from '../AppointmentFormIC/AppointmentFormIC';
 import { v4 as uuidv4 } from 'uuid';
 
-const DoctorCardIC = ({ name, speciality, experience, ratings, setAppointmentData }) => {
+const DoctorCardIC = ({ name, speciality, experience, ratings, setAppointmentData, setCanceledAppointment }) => {
   const [showModal, setShowModal] = useState(false);
   const [appointments, setAppointments] = useState([]);
 
@@ -18,6 +18,11 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, setAppointmentDat
     if (updatedAppointments.length === 0 && setAppointmentData) setAppointmentData(null);
 
     localStorage.removeItem(name);
+
+    // Notify parent that the appointment was canceled
+    if (setCanceledAppointment) {
+      setCanceledAppointment(true);
+    }
   };
 
   const handleFormSubmit = (appointmentData) => {
@@ -34,7 +39,7 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, setAppointmentDat
     }
 
     localStorage.setItem(name, JSON.stringify(newAppointment));
-  };
+};
 
   return (
     <div className="doctor-card-container">
@@ -50,13 +55,13 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, setAppointmentDat
           <div className="doctor-card-detail-experience">{experience} years experience</div>
           <div className="doctor-card-detail-consultationfees">Ratings: {ratings}</div>
         </div>
-            <button
-            type="button"
-            className={appointments.length > 0 ? 'book-appointment-btn cancel-appointment-btn' : 'book-appointment-btn'}
-            onClick={handleBooking}
-            >
-            {appointments.length > 0 ? 'Cancel Appointment' : 'Book Appointment'}
-            </button>
+        <button
+          type="button"
+          className={appointments.length > 0 ? 'book-appointment-btn cancel-appointment-btn' : 'book-appointment-btn'}
+          onClick={handleBooking}
+        >
+          {appointments.length > 0 ? 'Cancel Appointment' : 'Book Appointment'}
+        </button>
       </div>
 
       <Popup
@@ -67,7 +72,7 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, setAppointmentDat
         contentStyle={{
           width: '90%',
           maxWidth: '600px',
-          marginTop: '60px', // pushes modal below navbar if fixed
+          marginTop: '60px',
           zIndex: 1001,
         }}
         overlayStyle={{

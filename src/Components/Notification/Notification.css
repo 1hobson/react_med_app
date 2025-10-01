@@ -1,14 +1,14 @@
 .appointment-card {
-  position: fixed;       /* stays on top as you scroll */
-  top: 20px;             /* vertical position */
-  right: 20px;           /* horizontal position */
+  position: fixed; 
+  bottom: 20px;
+  right: 20px;
   width: 300px;
   background-color: #fff;
   border: 1px solid #ccc;
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
   padding: 16px;
-  z-index: 9999;         /* ensure it’s above other elements */
-  border-radius: 6px;    /* subtle rounded corners */
+  z-index: 9999;
+  border-radius: 6px;
 }
 
 .appointment-card__content {
@@ -28,8 +28,7 @@
   margin-bottom: 4px;
 }
 
-/* Optional: simple cancel button */
-.appointment-card button {
+.appointment-card-cancel-btn {
   margin-top: 8px;
   padding: 6px 10px;
   background-color: #e74c3c;
@@ -39,6 +38,6 @@
   cursor: pointer;
 }
 
-.appointment-card button:hover {
+.appointment-card-cancel-btn:hover {
   background-color: #c0392b;
 }

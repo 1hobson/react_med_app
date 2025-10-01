@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './DoctorCard.css';
 import AppointmentForm from '../AppointmentForm/AppointmentForm';
 import { v4 as uuidv4 } from 'uuid';
 
-const DoctorCard = ({ name, speciality, experience, ratings, setAppointmentData }) => {
+const DoctorCard = ({ name, speciality, experience, ratings, setAppointmentData, setCanceledAppointment, appointmentData }) => {
   const [showModal, setShowModal] = useState(false);
   const [appointments, setAppointments] = useState([]);
 
   const handleBooking = () => setShowModal(true);
 
   const handleCancel = (appointmentId) => {
-    const updatedAppointments = appointments.filter((a) => a.id !== appointmentId);
+    const updatedAppointments = appointments.filter(a => a.id !== appointmentId);
     setAppointments(updatedAppointments);
 
-    if (updatedAppointments.length === 0 && setAppointmentData) setAppointmentData(null);
+    // Clear App-level appointment data
+    if (setAppointmentData) setAppointmentData(null);
 
+    // Remove from localStorage
     localStorage.removeItem(name);
-  };
+
+    // Notify parent to hide notification
+    if (setCanceledAppointment) setCanceledAppointment(true);
+    };
 
   const handleFormSubmit = (appointmentData) => {
     const newAppointment = {
@@ -36,6 +41,14 @@ const DoctorCard = ({ name, speciality, experience, ratings, setAppointmentData 
     localStorage.setItem(name, JSON.stringify(newAppointment));
   };
 
+  useEffect(() => {
+    if (!appointmentData || appointmentData?.doctorName !== name) {
+      setAppointments([]);
+    } else {
+      setAppointments([appointmentData]);
+    }
+  }, [appointmentData, name]);
+
   return (
     <div className="doctor-card-container">
       <div className="doctor-card-details-container">
@@ -50,13 +63,13 @@ const DoctorCard = ({ name, speciality, experience, ratings, setAppointmentData 
           <div className="doctor-card-detail-experience">{experience} years experience</div>
           <div className="doctor-card-detail-consultationfees">Ratings: {ratings}</div>
         </div>
-            <button
-            type="button"
-            className={appointments.length > 0 ? 'book-appointment-btn cancel-appointment-btn' : 'book-appointment-btn'}
-            onClick={handleBooking}
-            >
-            {appointments.length > 0 ? 'Cancel Appointment' : 'Book Appointment'}
-            </button>
+        <button
+          type="button"
+          className={appointments.length > 0 ? 'book-appointment-btn cancel-appointment-btn' : 'book-appointment-btn'}
+          onClick={handleBooking}
+        >
+          {appointments.length > 0 ? 'Cancel Appointment' : 'Book Appointment'}
+        </button>
       </div>
 
       <Popup
@@ -67,7 +80,7 @@ const DoctorCard = ({ name, speciality, experience, ratings, setAppointmentData 
         contentStyle={{
           width: '90%',
           maxWidth: '600px',
-          marginTop: '60px', // pushes modal below navbar if fixed
+          marginTop: '60px',
           zIndex: 1001,
         }}
         overlayStyle={{

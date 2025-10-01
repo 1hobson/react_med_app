@@ -4,41 +4,55 @@ import { useSearchParams } from 'react-router-dom';
 import FindDoctorSearchIC from './FindDoctorSearchIC/FindDoctorSearchIC';
 import DoctorCardIC from './DoctorCardIC/DoctorCardIC';
 
-const InstantConsultation = ({ setAppointmentData }) => {
+const InstantConsultation = ({ setAppointmentData, setCanceledAppointment }) => {
   const [searchParams] = useSearchParams();
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [isSearched, setIsSearched] = useState(false);
 
-useEffect(() => {
-  const getDoctorsDetails = () => {
-    fetch('https://api.npoint.io/9a5543d36f1460da2f63')
-      .then(res => res.json())
-      .then(data => {
-        setDoctors(data);
-        const specialityParam = searchParams.get('speciality');
-        if (specialityParam) {
-          const filtered = data.filter(
-            doctor => doctor.speciality.toLowerCase() === specialityParam.toLowerCase()
-          );
-          setFilteredDoctors(filtered);
-          setIsSearched(true);
-        } else {
-          setFilteredDoctors([]);
-          setIsSearched(false);
-        }
-      })
-      .catch(err => console.log(err));
-  };
+  useEffect(() => {
+    const getDoctorsDetails = () => {
+      fetch('https://api.npoint.io/9a5543d36f1460da2f63')
+        .then(res => res.json())
+        .then(data => {
+          setDoctors(data);
+          const specialityParam = searchParams.get('speciality');
+          if (specialityParam) {
+            const filtered = data.filter(
+              doctor => doctor.speciality.toLowerCase() === specialityParam.toLowerCase()
+            );
+            setFilteredDoctors(filtered);
+            setIsSearched(true);
+          } else {
+            setFilteredDoctors([]);
+            setIsSearched(false);
+          }
+        })
+        .catch(err => console.log(err));
+    };
+  
+    getDoctorsDetails();
+  }, [searchParams]);  
 
-  getDoctorsDetails();
-}, [searchParams]);
+  const handleBookAppointment = (appointmentDetails, doctorName) => {
+    const now = new Date();
+    const appointmentWithDetails = {
+      ...appointmentDetails,
+      doctorName: doctorName,
+      date: now.toLocaleDateString(),
+      time: now.toLocaleTimeString(),
+    };
 
-  const handleBookAppointment = (appointment, doctorName) => {
-    localStorage.setItem(doctorName, JSON.stringify(appointment));
+    localStorage.setItem(doctorName, JSON.stringify(appointmentWithDetails));
+
     if (setAppointmentData) {
-      setAppointmentData(appointment);
+      setAppointmentData(appointmentWithDetails);
     }
+
+    const doctorData = {
+      name: doctorName,
+    };
+    localStorage.setItem('doctorData', JSON.stringify(doctorData));
   };
 
   const handleSearch = (text) => {
@@ -72,6 +86,7 @@ useEffect(() => {
                     {...doctor}
                     key={doctor.name}
                     setAppointmentData={(appointment) => handleBookAppointment(appointment, doctor.name)}
+                    setCanceledAppointment={setCanceledAppointment}
                     />
                 ))
                 ) : (
