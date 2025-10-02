@@ -1,0 +1,70 @@
+/* Reviews.css */
+
+.reviews-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.reviews-page h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+table {
+  width: 90%; /* Make the table wider */
+  max-width: 1000px; /* Limit maximum width */
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: center;
+}
+
+th {
+  background-color: #000080;
+  color: white;
+  font-weight: 600;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e9f5e9;
+}
+
+button {
+  padding: 6px 12px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #007BFF;
+}
+
+.submitted-review {
+  margin-top: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.warning {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}

@@ -54,6 +54,7 @@ function Navbar() {
         <ul className="nav__links active">
           <li className="link"><Link to="/"><button className="btn1">Home</button></Link></li>
           <li className="link"><Link to="/appointments"><button className="btn1">Appointments</button></Link></li>
+          <li className="link"><Link to="/reviews"><button className="btn1">Reviews</button></Link></li>
           <li className="link"><Link to="/instant-consultation"><button className="btn1">Instant Consultation</button></Link></li>
 
           {isLoggedIn ? (
