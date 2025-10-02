@@ -45,6 +45,7 @@ const Login = () => {
         sessionStorage.setItem('name', username);
 
         navigate('/');
+        window.location.reload(); // ✅ Force Navbar to re-check login state
       } else {
         if (json.errors) {
           setError(json.errors.map(err => err.msg).join(', '));
@@ -100,7 +101,11 @@ const Login = () => {
               />
             </div>
 
-            {error && <div className="error-message" style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
+            {error && (
+              <div className="error-message" style={{ color: 'red', marginTop: '10px' }}>
+                {error}
+              </div>
+            )}
 
             <div className="btn-group">
               <button type="submit" className="btn btn-primary">Login</button>

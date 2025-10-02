@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
@@ -52,13 +52,13 @@ function Navbar() {
         </div>
 
         <ul className="nav__links active">
-          <li className="link"><Link to="/">Home</Link></li>
-          <li className="link"><Link to="/appointments">Appointments</Link></li>
+          <li className="link"><Link to="/"><button className="btn1">Home</button></Link></li>
+          <li className="link"><Link to="/appointments"><button className="btn1">Appointments</button></Link></li>
           <li className="link"><Link to="/instant-consultation"><button className="btn1">Instant Consultation</button></Link></li>
 
           {isLoggedIn ? (
             <>
-              <li className="link">Welcome, {username}</li>
+              <li className="link welcome-text">Welcome, {username}</li>
               <li className="link">
                 <button className="btn2" onClick={handleLogout}>Logout</button>
               </li>

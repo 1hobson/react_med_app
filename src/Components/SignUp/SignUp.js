@@ -1,4 +1,3 @@
-// Following code has been commented with appropriate comments for your reference.
 import React, { useState } from 'react';
 import './Sign_Up.css'
 import { useNavigate } from 'react-router-dom';
