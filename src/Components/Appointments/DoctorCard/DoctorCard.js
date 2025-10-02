@@ -7,47 +7,43 @@ import { v4 as uuidv4 } from 'uuid';
 
 const DoctorCard = ({ name, speciality, experience, ratings, setAppointmentData, setCanceledAppointment, appointmentData }) => {
   const [showModal, setShowModal] = useState(false);
-  const [appointments, setAppointments] = useState([]);
+  const [hasAppointment, setHasAppointment] = useState(false);
 
   const handleBooking = () => setShowModal(true);
 
-  const handleCancel = (appointmentId) => {
-    const updatedAppointments = appointments.filter(a => a.id !== appointmentId);
-    setAppointments(updatedAppointments);
+  // Sync with localStorage for this doctor
+  useEffect(() => {
+    const stored = localStorage.getItem(name);
+    setHasAppointment(!!stored && !!appointmentData && appointmentData.doctorName === name);
+  }, [appointmentData, name]);
 
-    // Clear App-level appointment data
-    if (setAppointmentData) setAppointmentData(null);
-
-    // Remove from localStorage
+  const handleCancel = () => {
+    // Remove appointment and metadata
     localStorage.removeItem(name);
+    localStorage.removeItem('doctorData');
+  
+    // Notify parent
+    setAppointmentData(null);
+    setCanceledAppointment(true);
+  
+    // Local component state
+    setHasAppointment(false);
+  };  
 
-    // Notify parent to hide notification
-    if (setCanceledAppointment) setCanceledAppointment(true);
-    };
-
-  const handleFormSubmit = (appointmentData) => {
+  const handleFormSubmit = (formData) => {
     const newAppointment = {
       id: uuidv4(),
-      ...appointmentData,
+      doctorName: name,
+      ...formData,
     };
 
-    setAppointments([...appointments, newAppointment]);
-    setShowModal(false);
-
-    if (setAppointmentData) {
-      setAppointmentData(newAppointment);
-    }
-
     localStorage.setItem(name, JSON.stringify(newAppointment));
-  };
+    setHasAppointment(true);
 
-  useEffect(() => {
-    if (!appointmentData || appointmentData?.doctorName !== name) {
-      setAppointments([]);
-    } else {
-      setAppointments([appointmentData]);
-    }
-  }, [appointmentData, name]);
+    if (setAppointmentData) setAppointmentData(newAppointment);
+
+    setShowModal(false);
+  };
 
   return (
     <div className="doctor-card-container">
@@ -65,10 +61,10 @@ const DoctorCard = ({ name, speciality, experience, ratings, setAppointmentData,
         </div>
         <button
           type="button"
-          className={appointments.length > 0 ? 'book-appointment-btn cancel-appointment-btn' : 'book-appointment-btn'}
-          onClick={handleBooking}
+          className={hasAppointment ? 'book-appointment-btn cancel-appointment-btn' : 'book-appointment-btn'}
+          onClick={hasAppointment ? handleCancel : handleBooking}
         >
-          {appointments.length > 0 ? 'Cancel Appointment' : 'Book Appointment'}
+          {hasAppointment ? 'Cancel Appointment' : 'Book Appointment'}
         </button>
       </div>
 
@@ -111,24 +107,20 @@ const DoctorCard = ({ name, speciality, experience, ratings, setAppointmentData,
               </div>
             </div>
 
-            {appointments.length > 0 ? (
-              <>
-                <h3 style={{ textAlign: 'center' }}>Appointment Booked!</h3>
-                {appointments.map((appointment) => (
-                  <div className="bookedInfo" key={appointment.id}>
-                    <p>Name: {appointment.name}</p>
-                    <p>Phone Number: {appointment.phoneNumber}</p>
-                    <p>Appointment Date: {appointment.appointmentDate}</p>
-                    <button type="button" onClick={() => handleCancel(appointment.id)}>Cancel Appointment</button>
-                  </div>
-                ))}
-              </>
-            ) : (
+            {!hasAppointment ? (
               <AppointmentForm
                 doctorName={name}
                 doctorSpeciality={speciality}
                 onSubmit={handleFormSubmit}
               />
+            ) : (
+              <div className="bookedInfo">
+                <h3 style={{ textAlign: 'center' }}>Appointment Booked!</h3>
+                <p>Name: {appointmentData?.name}</p>
+                <p>Phone Number: {appointmentData?.phoneNumber}</p>
+                <p>Appointment Date: {appointmentData?.appointmentDate}</p>
+                <button type="button" onClick={handleCancel}>Cancel Appointment</button>
+              </div>
             )}
           </div>
         )}

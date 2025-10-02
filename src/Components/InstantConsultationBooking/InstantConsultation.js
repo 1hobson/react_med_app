@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import FindDoctorSearchIC from './FindDoctorSearchIC/FindDoctorSearchIC';
 import DoctorCardIC from './DoctorCardIC/DoctorCardIC';
 
-const InstantConsultation = ({ setAppointmentData, setCanceledAppointment }) => {
+const InstantConsultation = ({ setAppointmentData, setCanceledAppointment, appointmentData }) => {
   const [searchParams] = useSearchParams();
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
@@ -83,10 +83,11 @@ const InstantConsultation = ({ setAppointmentData, setCanceledAppointment }) => 
                 {filteredDoctors.length > 0 ? (
                 filteredDoctors.map(doctor => (
                     <DoctorCardIC
-                    {...doctor}
-                    key={doctor.name}
-                    setAppointmentData={(appointment) => handleBookAppointment(appointment, doctor.name)}
-                    setCanceledAppointment={setCanceledAppointment}
+                      {...doctor}
+                      key={doctor.name}
+                      setAppointmentData={(appointment) => handleBookAppointment(appointment, doctor.name)}
+                      setCanceledAppointment={setCanceledAppointment}
+                      appointmentData={appointmentData} // <--- Pass down current appointment
                     />
                 ))
                 ) : (

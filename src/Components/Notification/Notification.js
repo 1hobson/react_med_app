@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar/Navbar';
 import './Notification.css';
 
-const Notification = ({ children, appointmentData, canceledAppointment, setAppointmentData, setCanceledAppointment }) => {
+const Notification = ({ children, appointmentData, canceledAppointment, setCanceledAppointment }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [doctorData, setDoctorData] = useState(null);
@@ -37,16 +37,6 @@ const Notification = ({ children, appointmentData, canceledAppointment, setAppoi
     }
   }, [canceledAppointment, setCanceledAppointment]);
 
-  const handleCancelBooking = () => {
-    if (setAppointmentData) setAppointmentData(null);
-
-    if (appointmentData?.doctorName) {
-      localStorage.removeItem(appointmentData.doctorName);
-    }
-
-    if (setCanceledAppointment) setCanceledAppointment(true);
-  };
-
   return (
     <div>
       <Navbar />
@@ -68,13 +58,7 @@ const Notification = ({ children, appointmentData, canceledAppointment, setAppoi
             <p className="appointment-card__message">
               <strong>Time:</strong> {appointmentData?.time || 'N/A'}
             </p>
-            <button
-              type="button"
-              className="appointment-card-cancel-btn"
-              onClick={handleCancelBooking}
-            >
-              Cancel Appointment
-            </button>
+            {/* Cancel button removed completely */}
           </div>
         </div>
       )}
