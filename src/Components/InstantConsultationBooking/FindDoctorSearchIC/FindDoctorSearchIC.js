@@ -27,7 +27,7 @@ const FindDoctorSearchIC = () => {
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         if (searchDoctor.trim() !== '') {
-            navigate(`/instantconsultation?speciality=${searchDoctor}`);
+            navigate(`/instant-consultation?speciality=${searchDoctor}`);
         }
     };
 

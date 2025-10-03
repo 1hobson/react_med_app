@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import './AppointmentFormIC.css';
 
-const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
+const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit, onClose }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [appointmentDate, setAppointmentDate] = useState('');
@@ -18,43 +19,71 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
       doctorSpeciality,
     });
 
+    // Clear fields
     setName('');
     setPhoneNumber('');
     setAppointmentDate('');
     setSelectedSlot('');
+
+    if (onClose) onClose(); // close the popup after submission
   };
 
   return (
-    <form onSubmit={handleFormSubmit} className="appointment-form">
-      <div className="form-group">
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" value={name} onChange={e => setName(e.target.value)} required />
-      </div>
+    <div className="doctor-popup-container">
+      <form onSubmit={handleFormSubmit} className="appointment-form">
+        <div className="form-group">
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            required
+          />
+        </div>
 
-      <div className="form-group">
-        <label htmlFor="phoneNumber">Phone Number:</label>
-        <input type="tel" id="phoneNumber" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} required />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="appointmentDate">Select Date:</label>
-        <input type="date" id="appointmentDate" value={appointmentDate} onChange={e => setAppointmentDate(e.target.value)} required />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="timeSlot">Select Time Slot:</label>
-        <select id="timeSlot" value={selectedSlot} onChange={e => setSelectedSlot(e.target.value)} required>
-          <option value="">--Select a slot--</option>
-          <option value="09:00 AM">09:00 AM</option>
-          <option value="10:00 AM">10:00 AM</option>
-          <option value="11:00 AM">11:00 AM</option>
-          <option value="02:00 PM">02:00 PM</option>
-          <option value="03:00 PM">03:00 PM</option>
-        </select>
-      </div>
-
-      <button type="submit" className="btn-book">Book Now</button>
-    </form>
+        <div className="form-group">
+          <label htmlFor="phoneNumber">Phone Number:</label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            value={phoneNumber}
+            onChange={e => setPhoneNumber(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="appointmentDate">Select Date:</label>
+          <input
+            type="date"
+            id="appointmentDate"
+            value={appointmentDate}
+            onChange={e => setAppointmentDate(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="timeSlot">Select Time Slot:</label>
+          <select
+            id="timeSlot"
+            value={selectedSlot}
+            onChange={e => setSelectedSlot(e.target.value)}
+            required
+          >
+            <option value="">--Select a slot--</option>
+            <option value="09:00 AM">09:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="02:00 PM">02:00 PM</option>
+            <option value="03:00 PM">03:00 PM</option>
+          </select>
+        </div>
+        <div className="form-buttons">
+        <button type="submit" className="book-appointment-btn">Book Now</button>
+        <button type="button" onClick={onClose} className="book-appointment-btn cancel-appointment-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
   );
 };
 

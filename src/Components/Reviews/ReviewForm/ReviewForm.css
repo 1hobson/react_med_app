@@ -1,169 +1,102 @@
-/* Popup container styled like DoctorCard */
-.doctor-popup-container {
-    width: 100%;  /* fills the popup */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    padding: 20px;
-    box-sizing: border-box; /* include padding in width */
-}
-
-/* Header (Doctor info) */
-.doctor-popup-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.doctor-card-profile-image-container {
-    text-align: center;
-    margin-right: 15px;
-}
-
-.doctor-card-profile-image-container svg {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-}
-
-.doctor-card-details {
-    text-align: left;
-}
-
-.doctor-card-detail-name {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.doctor-card-detail-speciality {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.doctor-card-detail-experience {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-/* Buttons */
-.book-appointment-btn,
-.review-btn {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.book-appointment-btn:hover,
-.review-btn:hover {
-    background-color: #2980b9;
-}
-
-.review-btn:disabled {
-    background-color: #bdc3c7; /* greyed out when reviewed */
-    cursor: not-allowed;
-}
-
-/* Cancel button (if needed) */
-.cancel-appointment-btn {
-    background-color: #f44336;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.cancel-appointment-btn:hover {
-    background-color: #d63027;
-}
-
-/* Form styling */
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-input,
-textarea,
-select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-/* Star rating */
-.stars {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 15px;
-}
-
-.star {
-    font-size: 24px;
-    color: #ccc;
-    cursor: pointer;
-}
-
-.star.filled {
-    color: #f1c40f;
-}
-
-/* Make form fit the popup container */
-.review-popup form {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-/* Form group takes full width */
-.review-popup .form-group {
-    margin-bottom: 15px;
-    width: 100%;
-}
-
 .popup-content[role="dialog"] {
     width: 400px;
-    max-width: 100%;
-    margin: 0 auto; 
-    border-radius: 0; 
-    padding: 20px;
+    margin: 0 auto;
+    padding: 0;
+    border-radius: 0;
     box-sizing: border-box;
 }
 
-/* Inputs, textarea, select fill the container */
-.review-popup input,
-.review-popup textarea,
-.review-popup select {
-    width: 100%;
-    box-sizing: border-box; /* ensure padding doesn't overflow */
+.doctor-popup-container {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-sizing: border-box;
 }
 
-/* Buttons stay consistent width */
-.review-popup button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
+.review-btn {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
-/* Optional: add some spacing between submit and cancel buttons */
-.review-popup button + button {
-    margin-left: 10px;
+.review-btn:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.doctor-popup-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.doctor-card-profile-image-container {
+  flex-shrink: 0;
+}
+
+.doctor-card-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-form {
+  margin-top: 15px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.stars {
+  display: flex;
+  gap: 5px;
+}
+
+.star {
+  font-size: 20px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star.filled {
+  color: gold;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.book-appointment-btn {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancel-appointment-btn {
+  background-color: #dc3545;
+}
+
+.warning {
+  color: red;
+  margin-top: 5px;
+}
+
+.submitted-message {
+  margin-top: 10px;
 }

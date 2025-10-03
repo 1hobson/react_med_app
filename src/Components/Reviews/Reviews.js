@@ -2,37 +2,31 @@ import React, { useState, useEffect } from 'react';
 import ReviewForm from './ReviewForm/ReviewForm';
 import './Reviews.css';
 
-const Reviews = () => {
+const Reviews = ({ currentUser = 'guest' }) => {
   const [doctors, setDoctors] = useState([]);
-  const [reviews, setReviews] = useState({}); // store reviews by doctor index
+  const [reviews, setReviews] = useState({}); // { doctorName: { userId: reviewText } }
 
   useEffect(() => {
-    const getDoctorsDetails = () => {
-      fetch('https://api.npoint.io/9a5543d36f1460da2f63')
-        .then(res => res.json())
-        .then(data => setDoctors(data))
-        .catch(err => console.log(err));
-    };
-
-    getDoctorsDetails();
-
-    // Load saved reviews from localStorage
-    const savedReviews = JSON.parse(localStorage.getItem('reviews')) || {};
-    setReviews(savedReviews);
+    fetch('https://api.npoint.io/9a5543d36f1460da2f63')
+      .then(res => res.json())
+      .then(data => setDoctors(data))
+      .catch(err => console.log(err));
   }, []);
 
-  // Callback to handle submitted review
-  const handleReviewSubmit = (doctorIndex, reviewText) => {
-    setReviews((prev) => {
-      const updated = { ...prev, [doctorIndex]: reviewText };
-      localStorage.setItem('reviews', JSON.stringify(updated)); // persist
-      return updated;
-    });
+  const handleReviewSubmit = (doctorName, reviewText) => {
+    setReviews(prev => ({
+      ...prev,
+      [doctorName]: {
+        ...prev[doctorName],
+        [currentUser]: reviewText,
+      }
+    }));
   };
 
   return (
     <div className="reviews-page">
       <h2>Consultation Reviews</h2>
+
       <table>
         <thead>
           <tr>
@@ -44,22 +38,24 @@ const Reviews = () => {
           </tr>
         </thead>
         <tbody>
-          {doctors.map((doctor, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{doctor.name}</td>
-              <td>{doctor.speciality}</td>
-              <td>
-                <ReviewForm
-                  doctor={doctor}
-                  index={index}
-                  onSubmit={(reviewText) => handleReviewSubmit(index, reviewText)}
-                  disabled={!!reviews[index]} // disable if review exists
-                />
-              </td>
-              <td>{reviews[index] || ''}</td>
-            </tr>
-          ))}
+          {doctors.map((doctor, index) => {
+            const userReview = reviews[doctor.name]?.[currentUser];
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{doctor.name}</td>
+                <td>{doctor.speciality}</td>
+                <td>
+                  <ReviewForm
+                    doctor={doctor}
+                    onSubmit={(reviewText) => handleReviewSubmit(doctor.name, reviewText)}
+                    disabled={!!userReview} // disable if this user already reviewed
+                  />
+                </td>
+                <td>{userReview || ''}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

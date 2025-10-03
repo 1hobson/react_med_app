@@ -3,13 +3,10 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './ReviewForm.css';
 
-function ReviewForm({ doctor, index, onSubmit, disabled }) {
-  const [showPopup, setShowPopup] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    review: '',
-    rating: 0,
-  });
+function ReviewForm({ doctor, onSubmit, disabled }) {
+  const [formData, setFormData] = useState({ name: '', review: '', rating: 0 });
+  const [submittedMessage, setSubmittedMessage] = useState('');
+  const [showWarning, setShowWarning] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,35 +18,31 @@ function ReviewForm({ doctor, index, onSubmit, disabled }) {
 
   const handleSubmit = (e, close) => {
     e.preventDefault();
-    if (formData.name && formData.review && formData.rating > 0) {
-      onSubmit(`Rating: ${formData.rating} - ${formData.review} (by ${formData.name})`);
-      setFormData({ name: '', review: '', rating: 0 });
-      close();
-    } else {
-      alert('Please fill all fields and select a rating.');
+    if (!formData.name || !formData.review || formData.rating === 0) {
+      setShowWarning(true);
+      return;
     }
+    setShowWarning(false);
+    const message = `Rating: ${formData.rating} - ${formData.review} (by ${formData.name})`;
+    setSubmittedMessage(message);
+    onSubmit(message);
+    setFormData({ name: '', review: '', rating: 0 });
+    close();
   };
 
   return (
     <Popup
       trigger={
-        <button
-          className="review-btn"
-          disabled={disabled}
-          style={{ backgroundColor: disabled ? 'grey' : '', cursor: disabled ? 'not-allowed' : 'pointer' }}
-        >
-          {disabled ? 'Reviewed' : 'Click Here'}
+        <button className="review-btn" disabled={disabled}>
+          {disabled ? 'Reviewed' : 'Review'}
         </button>
       }
       modal
       nested
-      open={showPopup}
-      onOpen={() => !disabled && setShowPopup(true)}
-      onClose={() => setShowPopup(false)}
     >
       {(close) => (
-        <div className="doctor-popup-container" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
-          {/* Popup Header (Doctor Info) */}
+        <div className="doctor-popup-container">
+
           <div className="doctor-popup-header">
             <div className="doctor-card-profile-image-container">
               <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" viewBox="0 0 16 16">
@@ -64,27 +57,19 @@ function ReviewForm({ doctor, index, onSubmit, disabled }) {
             </div>
           </div>
 
-          {/* Review Form */}
-          <form className="doctor-card-details-container" onSubmit={(e) => handleSubmit(e, close)} style={{ marginTop: '15px' }}>
+          <form className="review-form" onSubmit={(e) => handleSubmit(e, close)}>
+            <h2>Give Your Feedback</h2>
+
+            {showWarning && <p className="warning">Please fill out all fields.</p>}
+
             <div className="form-group">
-              <label>Name:</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
+              <label htmlFor="name">Name:</label>
+              <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
             </div>
 
             <div className="form-group">
-              <label>Review:</label>
-              <textarea
-                name="review"
-                value={formData.review}
-                onChange={handleChange}
-                required
-              />
+              <label htmlFor="review">Review:</label>
+              <textarea id="review" name="review" value={formData.review} onChange={handleChange} />
             </div>
 
             <div className="form-group rating-group">
@@ -102,11 +87,18 @@ function ReviewForm({ doctor, index, onSubmit, disabled }) {
               </div>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '15px' }}>
+            <div className="form-actions">
               <button type="submit" className="book-appointment-btn">Submit</button>
               <button type="button" onClick={close} className="book-appointment-btn cancel-appointment-btn">Cancel</button>
             </div>
           </form>
+
+          {submittedMessage && (
+            <div className="submitted-message">
+              <h3>Submitted Message:</h3>
+              <p>{submittedMessage}</p>
+            </div>
+          )}
         </div>
       )}
     </Popup>
