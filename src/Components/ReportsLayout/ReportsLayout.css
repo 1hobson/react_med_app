@@ -1,17 +1,102 @@
-.reports-container {
-  max-width: 800px;
-  margin: 100px auto; /* leave space for navbar */
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
+.popup-content[role="dialog"] {
+    width: 400px;
+    margin: 0 auto;
+    padding: 0;
+    border-radius: 0;
+    box-sizing: border-box;
 }
 
-.reports-container h1 {
-  margin-top: 0;
-  color: #0d213f;
+.doctor-popup-container {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-sizing: border-box;
 }
 
-.reports-container p {
-  font-size: 1rem;
-  color: #333;
+.review-btn {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.review-btn:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.doctor-popup-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.doctor-card-profile-image-container {
+  flex-shrink: 0;
+}
+
+.doctor-card-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-form {
+  margin-top: 15px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.stars {
+  display: flex;
+  gap: 5px;
+}
+
+.star {
+  font-size: 20px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star.filled {
+  color: gold;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.book-appointment-btn {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancel-appointment-btn {
+  background-color: #dc3545;
+}
+
+.warning {
+  color: red;
+  margin-top: 5px;
+}
+
+.submitted-message {
+  margin-top: 10px;
 }
