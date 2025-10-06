@@ -5,9 +5,9 @@ import './Navbar.css';
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
 
-  // On mount, check sessionStorage for logged-in user
   useEffect(() => {
     const storedName = sessionStorage.getItem('name');
     if (storedName) {
@@ -59,7 +59,17 @@ function Navbar() {
 
           {isLoggedIn ? (
             <>
-              <li className="link welcome-text">Welcome, {username}</li>
+              <li className="link dropdown welcome-user">
+                <button className="btn1" onClick={() => setShowDropdown(!showDropdown)}>
+                  Welcome, {username} ▼
+                </button>
+                {showDropdown && (
+                  <ul className="dropdown-menu">
+                    <li><Link to="/profile">Profile</Link></li>
+                    <li><Link to="/reports">Reports</Link></li>
+                  </ul>
+                )}
+              </li>
               <li className="link">
                 <button className="btn2" onClick={handleLogout}>Logout</button>
               </li>

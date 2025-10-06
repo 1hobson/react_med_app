@@ -8,7 +8,9 @@ import Login from './Components/Login/Login';
 import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation';  
 import Appointments from './Components/Appointments/Appointments';  
 import Notification from './Components/Notification/Notification';
-import Reviews from './Components/Reviews/Reviews'
+import Reviews from './Components/Reviews/Reviews';
+import ProfileCard from './Components/ProfileCard/ProfileCard';
+import ReportsLayout from './Components/ReportsLayout/ReportsLayout';
 
 function App() {
   const [appointmentData, setAppointmentData] = useState(null);
@@ -38,6 +40,8 @@ function App() {
             <Route path="/appointments" element={<Appointments setAppointmentData={setAppointmentData} setCanceledAppointment={setCanceledAppointment} />} />
             <Route path="/instant-consultation" element={<InstantConsultation setAppointmentData={setAppointmentData} setCanceledAppointment={setCanceledAppointment} />} />
             <Route path="/reviews" element={<Reviews />} />
+            <Route path="/profile" element={<ProfileCard />} />
+            <Route path="/reports" element={<ReportsLayout />} />
           </Routes>
         </Notification>
       </BrowserRouter>

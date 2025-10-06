@@ -10,28 +10,6 @@ const InstantConsultation = ({ setAppointmentData, setCanceledAppointment, appoi
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [isSearched, setIsSearched] = useState(false);
 
-  const getDoctorsDetails = () => {
-    fetch('https://api.npoint.io/9a5543d36f1460da2f63')
-      .then(res => res.json())
-      .then(data => {
-        const specialityParam = searchParams.get('speciality');
-
-        if (specialityParam) {
-          const filtered = data.filter(
-            doctor => doctor.speciality.toLowerCase() === specialityParam.toLowerCase()
-          );
-          setFilteredDoctors(filtered);
-          setIsSearched(true);
-        } else {
-          setFilteredDoctors([]);
-          setIsSearched(false);
-        }
-
-        setDoctors(data);
-      })
-      .catch(err => console.log(err));
-  };
-
   const handleSearch = (searchText) => {
     if (searchText === '') {
       setFilteredDoctors([]);
@@ -65,7 +43,25 @@ const InstantConsultation = ({ setAppointmentData, setCanceledAppointment, appoi
   };
 
   useEffect(() => {
-    getDoctorsDetails();
+    fetch('https://api.npoint.io/9a5543d36f1460da2f63')
+      .then(res => res.json())
+      .then(data => {
+        const specialityParam = searchParams.get('speciality');
+
+        if (specialityParam) {
+          const filtered = data.filter(
+            doctor => doctor.speciality.toLowerCase() === specialityParam.toLowerCase()
+          );
+          setFilteredDoctors(filtered);
+          setIsSearched(true);
+        } else {
+          setFilteredDoctors([]);
+          setIsSearched(false);
+        }
+
+        setDoctors(data);
+      })
+      .catch(err => console.log(err));
   }, [searchParams]);
 
   return (

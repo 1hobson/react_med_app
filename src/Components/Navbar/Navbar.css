@@ -16,44 +16,46 @@ nav {
 /* Styling for the dropdown menu */
 .dropdown-menu {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 4px); /* directly below the button with 4px gap */
     left: 0;
-    z-index: 1;
-    display: none;
-    min-width: 120px;
+    min-width: 150px;
     padding: 8px 0;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
+    z-index: 9999;
 }
 
 /* Styling for the user welcome message container */
 .welcome-user {
-    position: relative;
+    position: relative; /* ensures dropdown is positioned relative to this li */
     cursor: pointer;
-}
-
-/* Display dropdown menu on hover */
-.welcome-user:hover .dropdown-menu {
-    display: block;
 }
 
 /* Styling for the items in the dropdown menu */
 .dropdown-menu li {
     display: block;
-    width: 150px;
-    padding: 5px;
+    width: 100%;
+    padding: 5px 12px;
 }
 
 /* Styling for links in the dropdown menu */
-.dropdown-menu li a {
+.dropdown-menu li a,
+.dropdown-menu li button {
     color: #333;
     text-decoration: none;
     transition: color 0.3s ease;
+    width: 100%;
+    display: block;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
 }
 
 /* Hover effect for links in the dropdown menu */
-.dropdown-menu li a:hover {
+.dropdown-menu li a:hover,
+.dropdown-menu li button:hover {
     color: #2190ff;
 }
 
@@ -81,7 +83,7 @@ nav {
 .nav__links {
     list-style: none;
     display: flex;
-    align-items: center; /* vertical center */
+    align-items: center;
     gap: 1rem;
     font-size: 1rem;
     font-weight: 500;
@@ -89,20 +91,10 @@ nav {
 
 /* Individual nav items */
 .nav__links .link {
-    display: flex;       /* horizontal flex inside li */
-    align-items: center; /* vertical center */
-    white-space: nowrap; /* prevent wrapping */
-    padding: 0 0.5rem;   /* horizontal spacing */
-}
-
-/* Style the welcome message */
-.nav__links .link.welcome-text {
-    white-space: nowrap;       /* prevent wrapping */
-    padding: 0 0.5rem;         /* horizontal spacing */
-    font-weight: 500;
-    color: #0d213f;
-    margin-top: 5px;
-
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0 0.5rem;
 }
 
 /* Button styles */
@@ -115,13 +107,13 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1rem;     /* horizontal padding */
+    padding: 0 1rem;
     cursor: pointer;
 }
 
 .btn1:hover, .btn2:hover {
-    background-color: #3685fb; /* Hover effect */
-    color: white;              /* Hover effect */
+    background-color: #3685fb;
+    color: white;
 }
 
 /* Media queries for mobile responsiveness */
@@ -155,7 +147,7 @@ nav {
         border-radius: 0.5rem;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         z-index: 999;
-        animation: slideDown 0.5s ease-in-out; /* Animation effect */
+        animation: slideDown 0.5s ease-in-out;
     }
 }
 

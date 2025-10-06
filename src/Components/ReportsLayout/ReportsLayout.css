@@ -1,0 +1,17 @@
+.reports-container {
+  max-width: 800px;
+  margin: 100px auto; /* leave space for navbar */
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.reports-container h1 {
+  margin-top: 0;
+  color: #0d213f;
+}
+
+.reports-container p {
+  font-size: 1rem;
+  color: #333;
+}
