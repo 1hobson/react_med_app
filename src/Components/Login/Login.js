@@ -9,7 +9,6 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  // Only redirect if auth-token exists
   useEffect(() => {
     const token = sessionStorage.getItem('auth-token');
     if (token) {
@@ -21,7 +20,6 @@ const Login = () => {
     e.preventDefault();
     setError(null);
 
-    // Email validation
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError('Please enter a valid email address.');
       return;
@@ -40,12 +38,11 @@ const Login = () => {
         sessionStorage.setItem('auth-token', json.authtoken);
         sessionStorage.setItem('email', email);
 
-        // Extract username from email before redirect
         const username = email.split('@')[0];
         sessionStorage.setItem('name', username);
 
         navigate('/');
-        window.location.reload(); // ✅ Force Navbar to re-check login state
+        window.location.reload();
       } else {
         if (json.errors) {
           setError(json.errors.map(err => err.msg).join(', '));

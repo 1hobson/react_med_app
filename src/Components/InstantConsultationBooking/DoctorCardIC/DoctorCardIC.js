@@ -9,7 +9,6 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, setAppointmentDat
   const [showModal, setShowModal] = useState(false);
   const [hasAppointment, setHasAppointment] = useState(false);
 
-  // Sync with localStorage for this doctor
   useEffect(() => {
     const stored = localStorage.getItem(name);
     setHasAppointment(!!stored && !!appointmentData && appointmentData.doctorName === name);

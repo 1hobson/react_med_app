@@ -25,7 +25,7 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit, onClose }) 
     setAppointmentDate('');
     setSelectedSlot('');
 
-    if (onClose) onClose(); // close the popup after submission
+    if (onClose) onClose();
   };
 
   return (

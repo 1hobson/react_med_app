@@ -1,4 +1,3 @@
-/* Styling for the main navigation bar */
 nav {
     padding: 1.5rem;
     position: fixed;
@@ -13,10 +12,9 @@ nav {
     z-index: 9999;
 }
 
-/* Styling for the dropdown menu */
 .dropdown-menu {
     position: absolute;
-    top: calc(100% + 4px); /* directly below the button with 4px gap */
+    top: calc(100% + 4px);
     left: 0;
     min-width: 150px;
     padding: 8px 0;
@@ -26,20 +24,17 @@ nav {
     z-index: 9999;
 }
 
-/* Styling for the user welcome message container */
 .welcome-user {
-    position: relative; /* ensures dropdown is positioned relative to this li */
+    position: relative;
     cursor: pointer;
 }
 
-/* Styling for the items in the dropdown menu */
 .dropdown-menu li {
     display: block;
     width: 100%;
     padding: 5px 12px;
 }
 
-/* Styling for links in the dropdown menu */
 .dropdown-menu li a,
 .dropdown-menu li button {
     color: #333;
@@ -53,13 +48,11 @@ nav {
     cursor: pointer;
 }
 
-/* Hover effect for links in the dropdown menu */
 .dropdown-menu li a:hover,
 .dropdown-menu li button:hover {
     color: #2190ff;
 }
 
-/* Styling for the logo in the navbar */
 .nav__logo {
     font-size: 2rem;
     font-weight: 600;
@@ -67,19 +60,16 @@ nav {
     cursor: pointer;
 }
 
-/* Styling for a span within the logo */
 .nav__logo span {
     color: #3685fb;
 }
 
-/* Styling for the icon in the navbar */
 .nav__icon {
     display: none;
     font-size: 2rem;
     cursor: pointer;
 }
 
-/* Navigation links container */
 .nav__links {
     list-style: none;
     display: flex;
@@ -89,7 +79,7 @@ nav {
     font-weight: 500;
 }
 
-/* Individual nav items */
+
 .nav__links .link {
     display: flex;
     align-items: center;
@@ -97,7 +87,7 @@ nav {
     padding: 0 0.5rem;
 }
 
-/* Button styles */
+
 .btn1, .btn2 {
     border: 2px solid #3685fb;
     background-color: white;
@@ -116,7 +106,6 @@ nav {
     color: white;
 }
 
-/* Media queries for mobile responsiveness */
 @media (max-width: 768px) {
     .nav__logo {
         margin-right: auto;
@@ -151,7 +140,6 @@ nav {
     }
 }
 
-/* Keyframes for slide down animation */
 @keyframes slideDown {
     0% {
         transform: translateY(-10px);

@@ -54,9 +54,6 @@
     gap: 0px;
 }
 
-
-
-
 ul {
     list-style: none;
 }
@@ -72,8 +69,6 @@ h2 {
     margin: 15px 0;
 }
 
-
-
 button {
     transition: all 0.5s ease-in-out;
     font-size: 1em;
@@ -83,11 +78,9 @@ button {
     margin-top: 10px;
 }
 
-
 .button:hover {
     transform: scale(0.98);
 }
-
 
 @media screen and (max-width:980px) {
     .hero-section h1 {
@@ -134,10 +127,6 @@ li {
     cursor: pointer;
 }
 
-/* Blob */
-
-
-/* Blobs */
 .flex-hero .blob-cont {
     justify-content: center;
     align-items: center;

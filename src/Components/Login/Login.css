@@ -1,55 +1,38 @@
-/* Styles for the main container */
 .container {
-    max-width: 900px; /* Maximum width of the container */
-    margin: 0 auto; /* Center the container horizontally */
-    padding: 40px; /* Padding inside the container */
-    margin-top: 10%; /* Top margin of 10% */
+    max-width: 900px;
+    margin: 0 auto;    padding: 40px;
+    margin-top: 10%; 
 }
 
-/* Styles for form groups */
-.form-group {
     margin-bottom: 20px; /* Bottom margin for spacing between form groups */
 }
 
 /* Styles for form group labels */
-.form-group label {
-    display: block; /* Make labels display as block elements */
+ display as block elements */
     margin-bottom: 5px; /* Bottom margin for spacing below labels */
-    font-weight: bold; /* Bold text for labels */
-}
+    font-weight: bo}
 
-/* Styles for form controls */
-.form-control {
+/* Styles for form con.form-control {
     width: 40%; /* Width of form controls */
-    padding: 8px; /* Padding inside form controls */
-    font-size: 16px; /* Font size of form controls */
+ize of form controls */
     border: 1px solid #ccc; /* Border around form controls */
-    border-radius: 4px; /* Border radius for rounded corners */
+    border-radi rounded corners */
 }
 
-/* Styles for button groups */
-.btn-group {
-    margin-top: .0001px; /* Top margin for spacing above button groups */
+/* Styles for button groups.btn-group {
+    margin-top: .0001px groups */
     margin-bottom: 20px; /* Bottom margin for spacing below button groups */
-}
-
 /* Styles for buttons */
 .btn {
-    padding: 10px 20px; /* Padding inside buttons */
-    font-size: 16px; /* Font size of buttons */
-    border: none; /* No border for buttons */
-    border-radius: 4px; /* Border radius for rounded corners on buttons */
+    padding: 10px 20px;     font-size: 16px; /* Font size of buttons */
+    border: none; /* No     border-radius: 4px; /* Border radius for rounded corners on buttons */
     cursor: pointer; /* Cursor style on hover for buttons */
-}
-
 /* Styles for primary buttons */
 .btn-primary {
-    background-color: #007bff; /* Background color for primary buttons */
-    color: #fff; /* Text color for primary buttons */
+    background-color: #or primary buttons */
+    color: #fff; /* ons */
 }
 
-/* Styles for danger (red) buttons */
-.btn-danger {
+/* Styles for danger.btn-danger {
     background-color: #dc3545; /* Background color for danger buttons */
     color: #fff; /* Text color for danger buttons */
-}

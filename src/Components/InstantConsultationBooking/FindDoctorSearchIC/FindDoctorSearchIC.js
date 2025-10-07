@@ -40,7 +40,6 @@ const FindDoctorSearchIC = () => {
             <div className="home-search-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <div className="doctor-search-box">
                     
-                    {/* Input + dropdown wrapper */}
                     <div className="input-wrapper" style={{ flex: 1, position: 'relative' }}>
                         <form onSubmit={handleSearchSubmit}>
                             <input
@@ -53,7 +52,6 @@ const FindDoctorSearchIC = () => {
                             />
                         </form>
 
-                        {/* Dropdown */}
                         {!doctorResultHidden && (
                             <div className="search-doctor-input-results">
                                 {specialities.map(speciality => (
@@ -77,7 +75,6 @@ const FindDoctorSearchIC = () => {
                         )}
                     </div>
 
-                    {/* Search icon */}
                     <div className="findiconimg">
                         <img className='findIcon' src={process.env.PUBLIC_URL + '/images/search.png'} alt="" />
                     </div>
